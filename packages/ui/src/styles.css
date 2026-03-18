@@ -1,0 +1,3 @@
+/* Entrypoint for Tailwind compilation in this shared UI package */
+@import "./styles/globals.css";
+
