@@ -6,6 +6,10 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
+    "paths": {
+      "@repo/ui/*": ["../../packages/ui/src/*"]
+    },
     "strictNullChecks": true
   },
   "include": [
