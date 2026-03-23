@@ -3,4 +3,4 @@ export {
   chatCompletionResponseSchema,
   chatMessageSchema,
   contract,
-} from "./contract.js";
+} from './contract.js';
