@@ -5,6 +5,11 @@
   "private": true,
   "exports": {
     "./base": "./base.js",
+    "./nest": {
+      "types": "./nest.d.ts",
+      "import": "./nest.js",
+      "default": "./nest.js"
+    },
     "./next-js": "./next.js",
     "./react-internal": "./react-internal.js"
   },
