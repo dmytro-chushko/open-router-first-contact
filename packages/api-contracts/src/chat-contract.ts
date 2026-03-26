@@ -21,16 +21,14 @@ export const chatCompletionResponseSchema = z.object({
   }),
 });
 
-export const contract = c.router({
-  chat: {
-    completion: {
-      method: 'POST',
-      path: '/chat',
-      body: chatCompletionBodySchema,
-      responses: {
-        200: chatCompletionResponseSchema,
-      },
-      summary: 'Chat completion',
+export const chatContract = c.router({
+  completion: {
+    method: 'POST',
+    path: '/chat',
+    body: chatCompletionBodySchema,
+    responses: {
+      200: chatCompletionResponseSchema,
     },
+    summary: 'Chat completion',
   },
 });

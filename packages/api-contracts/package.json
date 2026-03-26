@@ -4,9 +4,17 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./chat-contract": {
+      "types": "./dist/chat-contract.d.ts",
+      "default": "./dist/chat-contract.js"
+    }
   },
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
