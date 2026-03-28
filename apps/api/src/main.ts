@@ -37,7 +37,7 @@ async function bootstrap() {
   );
 
   app.use(
-    '/api-docs',
+    '/api/api-docs',
     swaggerUi.serve,
     swaggerUi.setup(openApiDocument, {
       customCss: '.swagger-ui .topbar { display: none }',
@@ -50,7 +50,7 @@ async function bootstrap() {
   );
 
   logger.log(
-    `🔗 Swagger UI: ${appConfig.apiUrl || `http://localhost:${port}`}/api-docs`,
+    `🔗 Swagger UI: ${appConfig.apiUrl || `http://localhost:${port}`}/api/api-docs`,
   );
 
   await app.listen(port);
