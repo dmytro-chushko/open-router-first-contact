@@ -1,0 +1,28 @@
+---
+description: Require MCP verification for OpenRouter questions
+alwaysApply: true
+---
+
+# OpenRouter MCP Verification
+
+For any user question related to OpenRouter, always verify the answer through MCP before responding.
+
+## Mandatory response protocol
+
+1. First, check relevant OpenRouter data via MCP.
+2. In the answer, explicitly state:
+   - what was verified via MCP;
+   - the final conclusion;
+   - confidence level;
+   - what remains unverified (if anything).
+3. If MCP is unavailable or does not contain enough data, explicitly say so and mark the answer as partially unverified.
+
+## Priority of sources
+
+1. MCP-verified data
+2. Official OpenRouter documentation
+3. General knowledge (only as fallback, with explicit label)
+
+## Scope
+
+Treat as OpenRouter-related: models, pricing, limits, keys, headers, SDK behavior, API endpoints, errors, quotas, and policy questions.
