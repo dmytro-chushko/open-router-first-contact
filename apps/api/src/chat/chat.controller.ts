@@ -1,5 +1,6 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
-import { chatCompletionBodySchema } from '@repo/api-contracts/chat-contract';
+import { Controller } from '@nestjs/common';
+import { contract } from '@repo/api-contracts';
+import { tsRestHandler, TsRestHandler } from '@ts-rest/nest';
 
 import { ChatService } from './chat.service';
 
@@ -7,14 +8,17 @@ import { ChatService } from './chat.service';
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
-  @Post()
-  async completion(@Body() body: unknown) {
-    const parsed = chatCompletionBodySchema.safeParse(body);
+  @TsRestHandler(contract.chat.completion)
+  completion(): ReturnType<
+    typeof tsRestHandler<typeof contract.chat.completion>
+  > {
+    return tsRestHandler(contract.chat.completion, async ({ body }) => {
+      const result = await this.chatService.complete(body);
 
-    if (!parsed.success) {
-      throw new BadRequestException(parsed.error.flatten());
-    }
-
-    return this.chatService.complete(parsed.data);
+      return {
+        status: 200,
+        body: result,
+      };
+    });
   }
 }
