@@ -3,10 +3,11 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ChatModule } from './chat/chat.module';
 import { CommonModule } from './common/common.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), CommonModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), CommonModule, ChatModule],
   controllers: [AppController],
   providers: [AppService],
 })
