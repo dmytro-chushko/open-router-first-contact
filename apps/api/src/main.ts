@@ -14,6 +14,12 @@ async function bootstrap() {
   const appConfig = app.get(AppConfigService);
   const port = appConfig.port;
 
+  app.enableCors({
+    origin: appConfig.webOrigin,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
+
   app.setGlobalPrefix('api');
 
   const openApiDocument = generateOpenApi(

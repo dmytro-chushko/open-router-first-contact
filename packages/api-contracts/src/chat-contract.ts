@@ -14,6 +14,8 @@ export const chatCompletionBodySchema = z.object({
   temperature: z.number().min(0).max(2).optional(),
 });
 
+export type ChatCompletionBody = z.infer<typeof chatCompletionBodySchema>;
+
 export const chatCompletionResponseSchema = z.object({
   message: z.object({
     role: z.literal('assistant'),

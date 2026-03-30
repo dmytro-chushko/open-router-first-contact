@@ -38,12 +38,12 @@ importers:
       '@nestjs/platform-express':
         specifier: ^11.0.1
         version: 11.1.17(@nestjs/common@11.1.17(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.17)
+      '@openrouter/sdk':
+        specifier: ^0.10.2
+        version: 0.10.2
       '@repo/api-contracts':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/api-contracts
-      '@ts-rest/nest':
-        specifier: ^3.52.1
-        version: 3.52.1(@nestjs/common@11.1.17(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.17(@nestjs/common@11.1.17(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.17)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@ts-rest/core@3.52.1(@types/node@22.15.3)(zod@3.25.76))(rxjs@7.8.2)(zod@3.25.76)
       '@ts-rest/open-api':
         specifier: ^3.52.1
         version: 3.52.1(@ts-rest/core@3.52.1(@types/node@22.15.3)(zod@3.25.76))(zod@3.25.76)
@@ -1294,6 +1294,9 @@ packages:
   '@open-draft/until@2.1.0':
     resolution: {integrity: sha512-U69T3ItWHvLwGg5eJ0n3I62nWuE6ilHlmz7zM0npLBRvPRd7e6NYmg54vvRtP5mZG7kZqZCFVdsTWo7BPtBujg==}
 
+  '@openrouter/sdk@0.10.2':
+    resolution: {integrity: sha512-od0aWkk+vhndEI78YyPvPgMxv2+32KO4MRrk8lFxro/YABKAHkozXugc+x3YeNf/d9KQaBO6M4Rut1uf+yeD2g==}
+
   '@paralleldrive/cuid2@2.3.1':
     resolution: {integrity: sha512-XO7cAxhnTZl0Yggq6jOgjiOHhbgcO4NqFqwSmQpjK3b6TEE6Uj/jfSk6wzYyemh3+I0sHirKSetjQwn5cZktFw==}
 
@@ -2212,18 +2215,6 @@ packages:
     peerDependenciesMeta:
       '@types/node':
         optional: true
-      zod:
-        optional: true
-
-  '@ts-rest/nest@3.52.1':
-    resolution: {integrity: sha512-6Abk9tRu0yxBv6PORAU6RIRizRQTQow7VeZ41j9vfEXXYUcR6DnkltGVIGSBepkg50wwJ9ygr0fplwNoWUUkBw==}
-    peerDependencies:
-      '@nestjs/common': ^9.0.0 || ^10.0.0 || ^11.0.0
-      '@nestjs/core': ^9.0.0 || ^10.0.0 || ^11.0.0
-      '@ts-rest/core': ~3.52.0
-      rxjs: ^7.1.0
-      zod: ^3.22.3
-    peerDependenciesMeta:
       zod:
         optional: true
 
@@ -6786,6 +6777,10 @@ snapshots:
 
   '@open-draft/until@2.1.0': {}
 
+  '@openrouter/sdk@0.10.2':
+    dependencies:
+      zod: 3.25.76
+
   '@paralleldrive/cuid2@2.3.1':
     dependencies:
       '@noble/hashes': 1.8.0
@@ -7721,15 +7716,6 @@ snapshots:
   '@ts-rest/core@3.52.1(@types/node@22.15.3)(zod@3.25.76)':
     optionalDependencies:
       '@types/node': 22.15.3
-      zod: 3.25.76
-
-  '@ts-rest/nest@3.52.1(@nestjs/common@11.1.17(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.17(@nestjs/common@11.1.17(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.17)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@ts-rest/core@3.52.1(@types/node@22.15.3)(zod@3.25.76))(rxjs@7.8.2)(zod@3.25.76)':
-    dependencies:
-      '@nestjs/common': 11.1.17(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@nestjs/core': 11.1.17(@nestjs/common@11.1.17(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.17)(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@ts-rest/core': 3.52.1(@types/node@22.15.3)(zod@3.25.76)
-      rxjs: 7.8.2
-    optionalDependencies:
       zod: 3.25.76
 
   '@ts-rest/open-api@3.52.1(@ts-rest/core@3.52.1(@types/node@22.15.3)(zod@3.25.76))(zod@3.25.76)':
