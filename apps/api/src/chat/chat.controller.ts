@@ -4,7 +4,7 @@ import { tsRestHandler, TsRestHandler } from '@ts-rest/nest';
 
 import { ChatService } from './chat.service';
 
-@Controller('chat')
+@Controller()
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 

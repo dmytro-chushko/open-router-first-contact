@@ -1,5 +1,9 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
+import {
+  badRequestResponse,
+  internalServerErrorResponse,
+} from './common-responses.js';
 
 const c = initContract();
 
@@ -16,12 +20,14 @@ export const chatCompletionBodySchema = z.object({
 
 export type ChatCompletionBody = z.infer<typeof chatCompletionBodySchema>;
 
-export const chatCompletionResponseSchema = z.object({
-  message: z.object({
-    role: z.literal('assistant'),
-    content: z.string(),
-  }),
-});
+export const chatCompletionResponseSchema = z
+  .object({
+    message: z.object({
+      role: z.literal('assistant'),
+      content: z.string(),
+    }),
+  })
+  .nullable();
 
 export const chatContract = c.router({
   completion: {
@@ -30,6 +36,8 @@ export const chatContract = c.router({
     body: chatCompletionBodySchema,
     responses: {
       200: chatCompletionResponseSchema,
+      400: badRequestResponse,
+      500: internalServerErrorResponse,
     },
     summary: 'Chat completion',
   },
