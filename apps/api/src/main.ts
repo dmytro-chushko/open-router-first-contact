@@ -7,12 +7,18 @@ import * as swaggerUi from 'swagger-ui-express';
 import { AppModule } from './app.module';
 import { AppConfigService } from './common/services/app-config';
 
+// CJS module; default import breaks at runtime with esModuleInterop: false (see nest tsconfig).
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const cookieParser = require('cookie-parser') as typeof import('cookie-parser');
+
 async function bootstrap() {
   const logger = new Logger('Main');
   const app = await NestFactory.create(AppModule);
 
   const appConfig = app.get(AppConfigService);
   const port = appConfig.port;
+
+  app.use(cookieParser());
 
   app.enableCors({
     origin: appConfig.webOrigin,
