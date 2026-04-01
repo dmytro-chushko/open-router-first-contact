@@ -18,10 +18,11 @@ export class AppConfigService {
   }
 
   get openRouterDefaultModel(): string {
-    return (
-      this.config.get<string>('OPENROUTER_DEFAULT_MODEL') ??
-      'openai/gpt-4o-mini'
-    );
+    const raw = this.config.get<string>('OPENROUTER_DEFAULT_MODEL');
+    const trimmed = typeof raw === 'string' ? raw.trim() : '';
+
+    // `??` does not treat "" as missing; empty .env value would send no model to OpenRouter.
+    return trimmed.length > 0 ? trimmed : 'openai/gpt-4o-mini';
   }
 
   get openRouterHttpReferer(): string | undefined {
