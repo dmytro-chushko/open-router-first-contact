@@ -5,8 +5,11 @@ import {
 } from '@nestjs/common';
 import { OpenRouter } from '@openrouter/sdk';
 import type { Message } from '@openrouter/sdk/models';
+import { OpenRouterError } from '@openrouter/sdk/models/errors';
 
 import { AppConfigService } from '../common/services/app-config';
+
+import { toNestHttpFromOpenRouterError } from './openrouter-error.mapper';
 
 export type ChatMessageInput = {
   role: 'user' | 'assistant' | 'system';
@@ -53,7 +56,13 @@ export class OpenRouterService implements OnModuleInit {
     model?: string;
     temperature?: number;
   }): Promise<string> {
-    const model = params.model ?? this.appConfig.openRouterDefaultModel;
+    const bodyModel =
+      typeof params.model === 'string' ? params.model.trim() : undefined;
+    const model =
+      bodyModel && bodyModel.length > 0
+        ? bodyModel
+        : this.appConfig.openRouterDefaultModel;
+
     const messages = this.toSdkMessages(params.messages);
 
     try {
@@ -81,7 +90,12 @@ export class OpenRouterService implements OnModuleInit {
 
       return JSON.stringify(raw);
     } catch (err: unknown) {
+      if (err instanceof OpenRouterError) {
+        throw toNestHttpFromOpenRouterError(err);
+      }
+
       const message = err instanceof Error ? err.message : String(err);
+
       throw new ServiceUnavailableException(
         `OpenRouter request failed: ${message}`,
       );
