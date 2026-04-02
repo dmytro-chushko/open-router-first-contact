@@ -1,0 +1,46 @@
+---
+description: Feature-Sliced Design (v2.1) for apps/web components and structure
+globs: apps/web/**/*
+alwaysApply: false
+---
+
+# FSD in `apps/web`
+
+In **`apps/web`** (Next.js App Router), follow **Feature-Sliced Design v2.1** with a minimal layer set: **`app` + pages-layer + `shared`**. Add `widgets` / `features` / `entities` only when there are **2+ clear consumers** and the team agrees.
+
+Principles: [fsd.how](https://fsd.how).
+
+## Mapping to Next.js
+
+Next.js reserves **`src/pages/`** for the **Pages Router**. Do **not** put FSD code there when using the App Router. Use **`src/views/<slice>/`** as the FSD **pages** layer (route-level slices).
+
+| FSD layer | Location in repo | What belongs here |
+| --------- | ---------------- | ----------------- |
+| **app**   | `apps/web/app/`  | **Routing and shell only**: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`, `metadata`, thin wrapper components. **No** heavy business logic; no large forms/chat UIs inlined in `page.tsx`. |
+| **pages** (FSD) | `apps/web/src/views/<slice>/` | One slice per route or screen: UI composition, local state, API calls for that screen. Segments: `ui/`, `model/`, `api/`, `lib/`, `config/` as needed. |
+| **shared**| `apps/web/src/shared/`        | **Infrastructure without domain business logic**: wrappers around `@repo/ui`, utilities, API client, constants, env config. |
+
+- Treat **`@repo/ui`** as the external UI kit (like `shared/ui` outside the app). Project-specific wrappers go in `src/shared/ui/` when needed.
+
+## Imports
+
+- Import **only from lower layers**: `app` → `views` (pages) → `widgets` → `features` → `entities` → `shared`.
+- **Forbidden**: upward imports and **direct cross-imports** between slices on the same layer (except agreed FSD exceptions, e.g. @x — last resort only).
+- External imports (`next/*`, `react`, `@repo/ui`, `@repo/api-contracts`) are fine from any layer when needed, but **do not put domain logic** in `shared/`.
+
+## Slice public API
+
+- From outside (e.g. `app/` or another slice), import screen code through the slice’s **`index.ts`** (e.g. `src/views/chat/index.ts`), not deep paths like `.../ui/ChatScreen.tsx`.
+
+## File naming
+
+- **Domain-based** names (`chat-messages.tsx`, `post-chat-completion.ts`), not generic technical buckets like **`types.ts` / `utils.ts`** for mixed domains.
+
+## Avoid without need
+
+- Do not create empty `entities/`, `features/`, or `widgets/` trees.
+- Do not duplicate large UI blocks in `app/page.tsx` — move them to `src/views/<slice>/ui/`.
+
+## Path alias (recommended)
+
+Use `"@/*": ["./src/*"]` in `apps/web/tsconfig.json` for stable imports (`@/views/chat`, `@/shared/lib/...`).
