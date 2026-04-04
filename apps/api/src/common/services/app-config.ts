@@ -33,7 +33,17 @@ export class AppConfigService {
     return this.config.get<string>('OPENROUTER_APP_TITLE');
   }
 
-  get webOrigin(): string {
-    return this.config.get<string>('WEB_ORIGIN') ?? 'http://localhost:3000';
+  /**
+   * CORS: дозволені Origin для фронта. Кілька значень через кому
+   * (наприклад `http://localhost:3000,http://192.168.1.5:3000` для ПК + телефон у LAN).
+   */
+  get webOrigins(): string[] {
+    const raw =
+      this.config.get<string>('WEB_ORIGIN') ?? 'http://localhost:3000';
+
+    return raw
+      .split(',')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0);
   }
 }

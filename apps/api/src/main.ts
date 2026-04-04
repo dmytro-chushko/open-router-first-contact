@@ -2,14 +2,11 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { contract } from '@repo/api-contracts';
 import { generateOpenApi } from '@ts-rest/open-api';
+import cookieParser from 'cookie-parser';
 import * as swaggerUi from 'swagger-ui-express';
 
 import { AppModule } from './app.module';
 import { AppConfigService } from './common/services/app-config';
-
-// CJS module; default import breaks at runtime with esModuleInterop: false (see nest tsconfig).
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const cookieParser = require('cookie-parser') as typeof import('cookie-parser');
 
 async function bootstrap() {
   const logger = new Logger('Main');
@@ -21,7 +18,7 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: appConfig.webOrigin,
+    origin: appConfig.webOrigins,
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   });

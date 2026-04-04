@@ -5,7 +5,6 @@
     "rootDir": "src",
     "outDir": "dist",
     "allowImportingTsExtensions": false,
-    "baseUrl": ".",
     "paths": {
       "./": ["./src/index.ts"],
       "./chat-contract": ["./src/chat-contract.ts"]
