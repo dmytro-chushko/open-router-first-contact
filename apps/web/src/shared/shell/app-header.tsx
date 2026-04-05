@@ -4,7 +4,7 @@ import { Button } from '@repo/ui/components/button';
 import { cn } from '@repo/ui/lib/utils';
 import { Monitor, Moon, Sun } from 'lucide-react';
 
-import { useTheme } from './theme-provider';
+import { useTheme } from '../providers/theme-provider';
 
 import type { ThemePreference } from '@/shared/lib/theme-storage';
 
