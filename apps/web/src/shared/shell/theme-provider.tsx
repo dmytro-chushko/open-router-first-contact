@@ -40,9 +40,7 @@ function readPreferenceFromDom(): ThemePreference | null {
 }
 
 function applyThemeToDom(preference: ThemePreference) {
-  const prefersDark = window.matchMedia(
-    '(prefers-color-scheme: dark)'
-  ).matches;
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const resolved = resolveTheme(preference, prefersDark);
   const root = document.documentElement;
   root.classList.toggle('dark', resolved === 'dark');

@@ -8,13 +8,11 @@ import { useTheme } from './theme-provider';
 
 import type { ThemePreference } from '@/shared/lib/theme-storage';
 
-
-const options: { value: ThemePreference; label: string; icon: typeof Sun }[] =
-  [
-    { value: 'light', label: 'Світла тема', icon: Sun },
-    { value: 'dark', label: 'Темна тема', icon: Moon },
-    { value: 'system', label: 'Як у системи', icon: Monitor },
-  ];
+const options: { value: ThemePreference; label: string; icon: typeof Sun }[] = [
+  { value: 'light', label: 'Світла тема', icon: Sun },
+  { value: 'dark', label: 'Темна тема', icon: Moon },
+  { value: 'system', label: 'Як у системи', icon: Monitor },
+];
 
 export function AppHeader() {
   const { theme, setTheme } = useTheme();
