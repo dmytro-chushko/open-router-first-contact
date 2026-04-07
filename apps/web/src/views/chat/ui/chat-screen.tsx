@@ -85,7 +85,7 @@ export function ChatScreen() {
   const canSend = draft.trim().length > 0 && !isSending;
 
   return (
-    <div className="bg-background flex min-h-dvh flex-col items-center px-4 py-8">
+    <div className="bg-background flex h-full flex-col items-center px-4 py-8">
       <Card className="flex h-[min(720px,calc(100dvh-4rem))] w-full max-w-2xl flex-col">
         <CardHeader className="border-b border-border pb-4">
           <CardTitle>Chat</CardTitle>

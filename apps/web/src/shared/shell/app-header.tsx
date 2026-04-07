@@ -19,7 +19,7 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-end px-4 sm:h-16 sm:px-6 md:px-8 lg:px-10">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-end px-4 md:h-16 sm:px-6 md:px-8 lg:px-10">
         <nav
           aria-label="Тема оформлення"
           className="inline-flex items-center gap-0.5 rounded-lg border border-border bg-muted/40 p-1 sm:gap-1"
