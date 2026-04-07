@@ -95,9 +95,12 @@ export function ChatScreen() {
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex min-h-0 flex-1 flex-col gap-2 px-0 pt-4">
-          <ScrollArea className="min-h-0 flex-1 px-4">
-            <div className="flex flex-col gap-3 pr-3 pb-2">
+        <CardContent className="flex min-h-0 flex-1 flex-col gap-2 pt-4">
+          <ScrollArea className="min-h-0 flex-1">
+            <section
+              className="flex flex-col gap-3 pr-3 pb-2"
+              aria-label="Chat messages"
+            >
               {messages.length === 0 && (
                 <p className="text-muted-foreground text-sm">
                   Start a conversation. Press Enter to send, Shift+Enter for a
@@ -105,8 +108,11 @@ export function ChatScreen() {
                 </p>
               )}
               {messages.map((m) => (
-                <div
+                <article
                   key={m.id}
+                  aria-label={
+                    m.role === 'user' ? 'Your message' : 'Assistant reply'
+                  }
                   className={
                     m.role === 'user'
                       ? 'ml-8 rounded-lg bg-primary/10 px-3 py-2'
@@ -116,52 +122,59 @@ export function ChatScreen() {
                   <div className="text-muted-foreground mb-1 text-xs font-medium capitalize">
                     {m.role}
                   </div>
-                  <div className="text-sm break-words whitespace-pre-wrap">
+                  <div className="text-sm wrap-break-word whitespace-pre-wrap">
                     {m.content}
                   </div>
-                </div>
+                </article>
               ))}
               {isSending && (
-                <div className="text-muted-foreground mr-8 rounded-lg bg-muted px-3 py-2 text-sm italic">
+                <div
+                  className="text-muted-foreground mr-8 rounded-lg bg-muted px-3 py-2 text-sm italic"
+                  aria-live="polite"
+                  aria-busy="true"
+                >
                   Thinking…
                 </div>
               )}
               <div ref={endRef} />
-            </div>
+            </section>
           </ScrollArea>
 
           {error && (
-            <p className="text-destructive px-4 text-sm" role="alert">
+            <p className="text-destructive text-sm" role="alert">
               {error}
             </p>
           )}
         </CardContent>
 
-        <CardFooter className="border-t border-border flex flex-col gap-2 pt-4">
-          <label className="sr-only" htmlFor="chat-input">
-            Message
-          </label>
-          <Textarea
-            id="chat-input"
-            placeholder="Type a message…"
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={onKeyDown}
-            disabled={isSending}
-            rows={3}
-            className="resize-none"
-            aria-label="Chat message input"
-          />
-          <div className="flex w-full justify-end">
-            <Button
-              type="button"
-              onClick={() => void handleSend()}
-              disabled={!canSend}
-              className="gap-2"
-            >
-              <Send className="size-4" aria-hidden />
-              Send
-            </Button>
+        <CardFooter className="flex flex-col gap-0 border-t border-border !p-0">
+          <div className="flex w-full min-w-0 flex-col gap-2 px-4 pt-4 pb-4">
+            <label className="sr-only" htmlFor="chat-input">
+              Message
+            </label>
+            <Textarea
+              id="chat-input"
+              placeholder="Type a message…"
+              value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onKeyDown={onKeyDown}
+              disabled={isSending}
+              rows={3}
+              className="resize-none"
+              aria-label="Chat message input"
+            />
+            <div className="flex w-full justify-end">
+              <Button
+                type="button"
+                onClick={() => void handleSend()}
+                disabled={!canSend}
+                aria-busy={isSending}
+                className="gap-2 [&_svg]:translate-y-px"
+              >
+                <Send className="size-4" aria-hidden />
+                Send
+              </Button>
+            </div>
           </div>
         </CardFooter>
       </Card>

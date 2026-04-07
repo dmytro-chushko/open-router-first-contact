@@ -32,26 +32,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-dvh bg-background font-sans text-foreground antialiased',
+          'flex min-h-dvh flex-col bg-background font-sans text-foreground antialiased',
           geist.variable,
           geistSans.variable,
-          geistMono.variable,
-          '[--header-height:calc(--spacing(16))] [--header-mobile-height:calc(--spacing(14))]'
+          geistMono.variable
         )}
       >
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INLINE_SCRIPT}
         </Script>
         <ThemeProvider>
-          <div className="flex flex-1 flex-col">
-            <AppHeader />
-            <main className="flex-1 h-[calc(100vh-var(--header-mobile-height))] md:h-[calc(100vh-var(--header-height))] overflow-y-auto overflow-x-hidden">
-              {children}
-            </main>
-          </div>
+          <AppHeader />
+          <main className="min-h-0 flex-1 overflow-x-clip overflow-y-auto">
+            {children}
+          </main>
         </ThemeProvider>
       </body>
     </html>

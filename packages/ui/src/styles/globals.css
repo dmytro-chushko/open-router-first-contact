@@ -1,7 +1,12 @@
-@import "tailwindcss";
-@import "@repo/tailwind-config";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import '@repo/tailwind-config';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+/* Scan app packages so utilities from @repo/ui components are generated in dev (not only prebuilt dist). */
+@source "../**/*.{js,ts,jsx,tsx}";
+@source "../../../../apps/web/**/*.{js,ts,jsx,tsx,mdx}";
+@source "../../../../apps/docs/**/*.{js,ts,jsx,tsx,mdx}";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -52,6 +57,7 @@
   --accent: oklch(0.93 0.02 92);
   --accent-foreground: oklch(0.175 0.045 262);
   --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0.002 255);
   --border: oklch(0.47 0.024 260);
   --input: oklch(0.47 0.024 260);
   --ring: oklch(0.62 0.16 259);
@@ -89,6 +95,7 @@
   --accent: oklch(0.34 0.038 264);
   --accent-foreground: oklch(0.93 0.01 265);
   --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.22 0.02 22);
   --border: oklch(0.48 0.02 260 / 83%);
   --input: oklch(0.55 0.02 260 / 87%);
   --ring: oklch(0.7 0.14 259);
@@ -123,6 +130,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
