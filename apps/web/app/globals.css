@@ -1,12 +1,12 @@
-/* Кольори та Tailwind-токени беруться з @repo/ui (shadcn + @theme inline). */
+/* Colors and Tailwind tokens come from @repo/ui (shadcn + @theme inline). */
 
 html {
   color-scheme: light dark;
 }
 
 /*
- * Не використовувати overflow-x: hidden на корені — ламає position: sticky
- * (scroll container предків). clip дає той самий візуальний ефект без цієї пастки.
+ * Avoid overflow-x: hidden on the root — it breaks position: sticky
+ * (ancestor scroll container). clip gives the same visual effect without that pitfall.
  */
 html,
 body {
@@ -16,7 +16,6 @@ body {
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
 }
 
@@ -25,19 +24,7 @@ a {
   text-decoration: none;
 }
 
-/* Під клас `.dark` на <html> (ручна/збережена тема), а не лише prefers-color-scheme */
+/* When <html> has `.dark` (manual/saved theme), not only prefers-color-scheme */
 .dark {
   color-scheme: dark;
-}
-
-.imgDark {
-  display: none;
-}
-
-.dark .imgLight {
-  display: none;
-}
-
-.dark .imgDark {
-  display: unset;
 }
