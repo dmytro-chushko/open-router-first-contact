@@ -45,10 +45,12 @@ export default function RootLayout({
           {THEME_INLINE_SCRIPT}
         </Script>
         <ThemeProvider>
-          <AppHeader />
-          <main className="min-h-0 flex-1 overflow-x-clip overflow-y-auto">
-            {children}
-          </main>
+          <div className="[--header-height:calc(--spacing(18))] [--header-mobile-height:calc(--spacing(16))]">
+            <AppHeader />
+            <main className="min-h-0 h-[calc(100vh-var(--header-mobile-height))] md:h-[calc(100vh-var(--header-height))] flex-1 overflow-x-clip overflow-y-auto">
+              {children}
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>
