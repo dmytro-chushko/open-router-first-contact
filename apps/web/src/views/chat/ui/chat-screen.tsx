@@ -16,14 +16,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ChatMessage } from '../model/chat-message';
 
-import { postChatCompletion } from '@/shared/api/post-chat-completion';
+import { useChatCompletionMutation } from '@/entities/chat';
 import { getPublicApiBaseUrl } from '@/shared/config/public-api-url';
 
 export function ChatScreen() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState('');
-  const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { mutateAsync, isPending, reset } = useChatCompletionMutation();
   const endRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -37,7 +37,7 @@ export function ChatScreen() {
   const handleSend = useCallback(async () => {
     const text = draft.trim();
 
-    if (!text || isSending) {
+    if (!text || isPending) {
       return;
     }
 
@@ -50,7 +50,7 @@ export function ChatScreen() {
     setDraft('');
     setError(null);
     setMessages((prev) => [...prev, userMessage]);
-    setIsSending(true);
+    reset();
 
     const historyForApi = [...messages, userMessage].map((m) => ({
       role: m.role,
@@ -58,7 +58,7 @@ export function ChatScreen() {
     }));
 
     try {
-      const assistantContent = await postChatCompletion({
+      const assistantContent = await mutateAsync({
         messages: historyForApi,
       });
       const assistantMessage: ChatMessage = {
@@ -70,10 +70,8 @@ export function ChatScreen() {
     } catch (e) {
       const message = e instanceof Error ? e.message : 'Request failed';
       setError(message);
-    } finally {
-      setIsSending(false);
     }
-  }, [draft, isSending, messages]);
+  }, [draft, isPending, messages, mutateAsync, reset]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -82,7 +80,7 @@ export function ChatScreen() {
     }
   };
 
-  const canSend = draft.trim().length > 0 && !isSending;
+  const canSend = draft.trim().length > 0 && !isPending;
 
   return (
     <div className="bg-background flex h-full flex-col items-center px-4 py-8">
@@ -127,7 +125,7 @@ export function ChatScreen() {
                   </div>
                 </article>
               ))}
-              {isSending && (
+              {isPending && (
                 <div
                   className="text-muted-foreground mr-8 rounded-lg bg-muted px-3 py-2 text-sm italic"
                   aria-live="polite"
@@ -158,7 +156,7 @@ export function ChatScreen() {
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={onKeyDown}
-              disabled={isSending}
+              disabled={isPending}
               rows={3}
               className="resize-none"
               aria-label="Chat message input"
@@ -168,7 +166,7 @@ export function ChatScreen() {
                 type="button"
                 onClick={() => void handleSend()}
                 disabled={!canSend}
-                aria-busy={isSending}
+                aria-busy={isPending}
                 className="gap-2 [&_svg]:translate-y-px"
               >
                 <Send className="size-4" aria-hidden />
