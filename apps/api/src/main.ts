@@ -5,7 +5,7 @@ import { generateOpenApi } from '@ts-rest/open-api';
 import cookieParser from 'cookie-parser';
 import * as swaggerUi from 'swagger-ui-express';
 
-import { AppModule } from './app.module';
+import { AppModule } from './app/app.module';
 import { AppConfigService } from './common/services/app-config';
 
 async function bootstrap() {
