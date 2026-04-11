@@ -1,11 +1,10 @@
+import { Toaster } from '@repo/ui/components/sonner';
 import { cn } from '@repo/ui/lib/utils';
 import '@repo/ui/styles.css';
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
 import localFont from 'next/font/local';
-import Script from 'next/script';
 
-import { THEME_INLINE_SCRIPT } from '@/shared/lib/theme-inline-script';
 import { QueryProvider } from '@/shared/providers/query-provider';
 import { AppHeader, ThemeProvider } from '@/shared/shell';
 
@@ -42,9 +41,6 @@ export default function RootLayout({
           geistMono.variable
         )}
       >
-        <Script id="theme-init" strategy="beforeInteractive">
-          {THEME_INLINE_SCRIPT}
-        </Script>
         <ThemeProvider>
           <QueryProvider>
             <div className="[--header-height:calc(--spacing(18))] [--header-mobile-height:calc(--spacing(16))]">
@@ -54,6 +50,7 @@ export default function RootLayout({
               </main>
             </div>
           </QueryProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
