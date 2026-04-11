@@ -3,8 +3,8 @@
 import { Button } from '@repo/ui/components/button';
 import { cn } from '@repo/ui/lib/utils';
 import { Monitor, Moon, Sun } from 'lucide-react';
-
-import { useTheme } from '../providers/theme-provider';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 import type { ThemePreference } from '@/shared/lib/theme-storage';
 
@@ -15,7 +15,17 @@ const options: { value: ThemePreference; label: string; icon: typeof Sun }[] = [
 ];
 
 export function AppHeader() {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Until mounted, keep the same "active" slot as SSR (theme is unknown on server → treat as system).
+  const selected = (
+    mounted ? (theme ?? 'system') : 'system'
+  ) as ThemePreference;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
@@ -25,7 +35,7 @@ export function AppHeader() {
           className="inline-flex items-center gap-0.5 rounded-lg border border-border bg-muted/40 p-1 sm:gap-1"
         >
           {options.map(({ value, label, icon: Icon }) => {
-            const active = theme === value;
+            const active = selected === value;
 
             return (
               <Button
