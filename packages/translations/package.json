@@ -1,0 +1,21 @@
+{
+  "name": "@repo/translations",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./locales/en": "./locales/en.json",
+    "./locales/uk": "./locales/uk.json"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "5.9.2"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  }
+}

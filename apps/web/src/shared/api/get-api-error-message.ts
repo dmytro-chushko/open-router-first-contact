@@ -1,4 +1,5 @@
-export function getApiErrorMessage(status: number, body: unknown): string {
+/** Returns API-provided error string when present; otherwise `null` (caller uses localized fallback). */
+export function tryGetApiErrorString(body: unknown): string | null {
   if (
     typeof body === 'object' &&
     body !== null &&
@@ -8,5 +9,5 @@ export function getApiErrorMessage(status: number, body: unknown): string {
     return (body as { error: string }).error;
   }
 
-  return `Request failed (${status})`;
+  return null;
 }
