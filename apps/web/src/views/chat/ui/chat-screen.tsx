@@ -12,14 +12,18 @@ import {
 import { ScrollArea } from '@repo/ui/components/scroll-area';
 import { Textarea } from '@repo/ui/components/textarea';
 import { Send } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ChatMessage } from '../model/chat-message';
 
 import { useChatCompletionMutation } from '@/entities/chat';
 import { getPublicApiBaseUrl } from '@/shared/config/public-api-url';
+import { FrontChatError } from '@/shared/lib/front-chat-error';
 
 export function ChatScreen() {
+  const t = useTranslations('chat');
+  const tErrors = useTranslations('errors');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -68,10 +72,21 @@ export function ChatScreen() {
       };
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (e) {
-      const message = e instanceof Error ? e.message : 'Request failed';
-      setError(message);
+      if (e instanceof FrontChatError) {
+        if (e.payload.kind === 'http') {
+          setError(
+            tErrors('requestFailed', { status: String(e.payload.status) })
+          );
+        } else {
+          setError(tErrors('invalidResponse'));
+        }
+      } else if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError(tErrors('unknown'));
+      }
     }
-  }, [draft, isPending, messages, mutateAsync, reset]);
+  }, [draft, isPending, messages, mutateAsync, reset, tErrors]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -86,10 +101,9 @@ export function ChatScreen() {
     <div className="bg-background flex h-full flex-col items-center px-4 py-8">
       <Card className="flex h-[min(720px,calc(100dvh-4rem))] w-full max-w-2xl flex-col">
         <CardHeader className="border-b border-border pb-4">
-          <CardTitle>Chat</CardTitle>
+          <CardTitle>{t('title')}</CardTitle>
           <CardDescription>
-            Messages are sent to your API at{' '}
-            <code className="text-xs">{getPublicApiBaseUrl()}</code>
+            {t('description', { apiUrl: getPublicApiBaseUrl() })}
           </CardDescription>
         </CardHeader>
 
@@ -97,19 +111,18 @@ export function ChatScreen() {
           <ScrollArea className="min-h-0 flex-1">
             <section
               className="flex flex-col gap-3 pr-3 pb-2"
-              aria-label="Chat messages"
+              aria-label={t('title')}
             >
               {messages.length === 0 && (
                 <p className="text-muted-foreground text-sm">
-                  Start a conversation. Press Enter to send, Shift+Enter for a
-                  new line.
+                  {t('emptyHint')}
                 </p>
               )}
               {messages.map((m) => (
                 <article
                   key={m.id}
                   aria-label={
-                    m.role === 'user' ? 'Your message' : 'Assistant reply'
+                    m.role === 'user' ? t('yourMessage') : t('assistantReply')
                   }
                   className={
                     m.role === 'user'
@@ -131,7 +144,7 @@ export function ChatScreen() {
                   aria-live="polite"
                   aria-busy="true"
                 >
-                  Thinking…
+                  {t('thinking')}
                 </div>
               )}
               <div ref={endRef} />
@@ -148,18 +161,18 @@ export function ChatScreen() {
         <CardFooter className="flex flex-col gap-0 border-t border-border !p-0">
           <div className="flex w-full min-w-0 flex-col gap-2 px-4 pt-4 pb-4">
             <label className="sr-only" htmlFor="chat-input">
-              Message
+              {t('messageLabel')}
             </label>
             <Textarea
               id="chat-input"
-              placeholder="Type a message…"
+              placeholder={t('inputPlaceholder')}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={onKeyDown}
               disabled={isPending}
               rows={3}
               className="resize-none"
-              aria-label="Chat message input"
+              aria-label={t('inputAriaLabel')}
             />
             <div className="flex w-full justify-end">
               <Button
@@ -170,7 +183,7 @@ export function ChatScreen() {
                 className="gap-2 [&_svg]:translate-y-px"
               >
                 <Send className="size-4" aria-hidden />
-                Send
+                {t('send')}
               </Button>
             </div>
           </div>

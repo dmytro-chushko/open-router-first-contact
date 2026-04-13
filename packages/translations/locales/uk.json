@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "Open Router — чат",
+    "description": "Чат на базі OpenRouter"
+  },
+  "header": {
+    "themeAppearance": "Оформлення теми",
+    "themeLight": "Світла тема",
+    "themeDark": "Темна тема",
+    "themeSystem": "Як у системи",
+    "localeSwitcher": "Мова"
+  },
+  "chat": {
+    "title": "Чат",
+    "description": "Повідомлення надсилаються на ваш API: {apiUrl}",
+    "emptyHint": "Почніть розмову. Enter — надіслати, Shift+Enter — новий рядок.",
+    "yourMessage": "Ваше повідомлення",
+    "assistantReply": "Відповідь асистента",
+    "thinking": "Думаю…",
+    "messageLabel": "Повідомлення",
+    "inputPlaceholder": "Введіть повідомлення…",
+    "inputAriaLabel": "Поле вводу чату",
+    "send": "Надіслати"
+  },
+  "errors": {
+    "invalidResponse": "Некоректна відповідь API чату",
+    "requestFailed": "Запит не вдався ({status})",
+    "unknown": "Сталася помилка"
+  }
+}

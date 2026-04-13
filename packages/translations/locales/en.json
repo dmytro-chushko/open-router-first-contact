@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "title": "Open Router Chat",
+    "description": "Chat UI powered by OpenRouter"
+  },
+  "header": {
+    "themeAppearance": "Theme appearance",
+    "themeLight": "Light theme",
+    "themeDark": "Dark theme",
+    "themeSystem": "Match system",
+    "localeSwitcher": "Language"
+  },
+  "chat": {
+    "title": "Chat",
+    "description": "Messages are sent to your API at {apiUrl}",
+    "emptyHint": "Start a conversation. Press Enter to send, Shift+Enter for a new line.",
+    "yourMessage": "Your message",
+    "assistantReply": "Assistant reply",
+    "thinking": "Thinking…",
+    "messageLabel": "Message",
+    "inputPlaceholder": "Type a message…",
+    "inputAriaLabel": "Chat message input",
+    "send": "Send"
+  },
+  "errors": {
+    "invalidResponse": "Invalid response from chat API",
+    "requestFailed": "Request failed ({status})",
+    "unknown": "Something went wrong"
+  }
+}
