@@ -80,9 +80,9 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <QueryProvider>
-              <div className="[--header-height:calc(--spacing(18))] [--header-mobile-height:calc(--spacing(16))]">
+              <div className="[--header-height:calc(--spacing(16))] [--header-tablet-height:calc(--spacing(14))] [--header-mobile-height:calc(--spacing(18))]">
                 <AppHeader />
-                <main className="min-h-0 h-[calc(100vh-var(--header-mobile-height))] md:h-[calc(100vh-var(--header-height))] flex-1 overflow-x-clip overflow-y-auto">
+                <main className="min-h-0 h-[calc(100vh-var(--header-tablet-height))] md:h-[calc(100vh-var(--header-height))] max-sm:h-[calc(100vh-var(--header-mobile-height))] flex-1 overflow-x-clip overflow-y-auto">
                   {children}
                 </main>
               </div>
