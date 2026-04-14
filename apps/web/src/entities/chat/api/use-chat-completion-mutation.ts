@@ -8,7 +8,7 @@ import { tryGetApiErrorString } from '@/shared/api/get-api-error-message';
 import { FrontChatError } from '@/shared/lib/front-chat-error';
 
 export function useChatCompletionMutation() {
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async (body: ChatCompletionBody) => {
       const result = await publicApiClient.chat.completion({
         body,
@@ -33,4 +33,6 @@ export function useChatCompletionMutation() {
       return data.message.content;
     },
   });
+
+  return mutation;
 }

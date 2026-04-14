@@ -37,8 +37,8 @@ export function AppHeader() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-end gap-3 px-4 md:h-16 sm:px-6 md:px-8 lg:px-10">
+    <header className="sticky top-0 z-50 w-full bg-background/80 shadow-[0_1px_0_0_var(--border)] backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
+      <div className="mx-auto flex h-14 max-sm:h-18 max-w-7xl items-center justify-end gap-3 px-4 md:h-16 sm:px-6 md:px-8 lg:px-10">
         <nav
           aria-label={t('localeSwitcher')}
           className="inline-flex items-center gap-1 rounded-lg border border-border bg-muted/40 p-1"
