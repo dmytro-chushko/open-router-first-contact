@@ -63,7 +63,7 @@ export function AppHeader() {
         </nav>
         <nav
           aria-label={t('themeAppearance')}
-          className="inline-flex items-center gap-0.5 rounded-lg border border-border bg-muted/40 p-1 sm:gap-1"
+          className="inline-flex items-center gap-1 rounded-lg border border-border bg-muted/40 p-1"
         >
           {themeOptions.map(({ value, labelKey, icon: Icon }) => {
             const active = selected === value;
@@ -77,10 +77,7 @@ export function AppHeader() {
                 aria-pressed={active}
                 aria-label={t(labelKey)}
                 title={t(labelKey)}
-                className={cn(
-                  'touch-manipulation h-11 min-h-11 w-11 min-w-11 sm:h-8 sm:min-h-8 sm:w-8 sm:min-w-8',
-                  active && 'shadow-sm'
-                )}
+                className={cn(active && 'shadow-sm')}
                 onClick={() => setTheme(value)}
               >
                 <Icon className="size-4 shrink-0" aria-hidden />
