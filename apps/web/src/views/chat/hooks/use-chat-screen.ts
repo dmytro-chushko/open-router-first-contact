@@ -1,19 +1,24 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { useState, useRef, useCallback, useEffect } from 'react';
 
 import { ChatMessage } from '../model/chat-message';
 
 import { useChatCompletionMutation } from '@/entities/chat';
-import { FrontChatError } from '@/shared/lib/front-chat-error';
+import { useError } from '@/shared/hooks/use-error';
 
 export function useChatScreen() {
-  const tErrors = useTranslations('errors');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [draft, setDraft] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const { mutateAsync, isPending, reset } = useChatCompletionMutation();
+  const {
+    mutateAsync,
+    isPending,
+    reset,
+    error: mutationError,
+    isError,
+  } = useChatCompletionMutation();
+  const { getErrorMessage } = useError();
   const endRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -47,32 +52,16 @@ export function useChatScreen() {
       content: m.content,
     }));
 
-    try {
-      const assistantContent = await mutateAsync({
-        messages: historyForApi,
-      });
-      const assistantMessage: ChatMessage = {
-        id: crypto.randomUUID(),
-        role: 'assistant',
-        content: assistantContent,
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (e) {
-      if (e instanceof FrontChatError) {
-        if (e.payload.kind === 'http') {
-          setError(
-            tErrors('requestFailed', { status: String(e.payload.status) })
-          );
-        } else {
-          setError(tErrors('invalidResponse'));
-        }
-      } else if (e instanceof Error) {
-        setError(e.message);
-      } else {
-        setError(tErrors('unknown'));
-      }
-    }
-  }, [draft, isPending, messages, mutateAsync, reset, tErrors]);
+    const assistantContent = await mutateAsync({
+      messages: historyForApi,
+    });
+    const assistantMessage: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: 'assistant',
+      content: assistantContent,
+    };
+    setMessages((prev) => [...prev, assistantMessage]);
+  }, [draft, isPending, messages, mutateAsync, reset]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -80,6 +69,12 @@ export function useChatScreen() {
       void handleSend();
     }
   };
+
+  useEffect(() => {
+    if (isError && mutationError) {
+      setError(getErrorMessage(mutationError));
+    }
+  }, [isError, mutationError, getErrorMessage]);
 
   const canSend = draft.trim().length > 0 && !isPending;
 
