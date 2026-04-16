@@ -1,0 +1,12 @@
+{
+  "init helper from filename (kebab -> PascalCase)": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "usename",
+    "body": [
+      "export function ${TM_FILENAME_BASE/(^\\w)|[_-](\\w)/${1:/downcase}${2:/capitalize}/g}() {",
+      "  $0",
+      "}",
+    ],
+    "description": "Create helper function using file name (snake|kebab → PascalCase)",
+  },
+}
