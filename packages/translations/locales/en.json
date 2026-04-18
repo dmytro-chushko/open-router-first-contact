@@ -26,5 +26,13 @@
     "invalidResponse": "Invalid response from chat API",
     "requestFailed": "Request failed ({status})",
     "unknown": "Something went wrong"
+  },
+  "system": {
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "This link may be broken or the page may have moved.",
+    "goToChat": "Go to chat",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "Try again or return to chat. If the problem persists, refresh the page.",
+    "retry": "Try again"
   }
 }
