@@ -93,7 +93,7 @@ export function ChatScreen() {
           )}
         </CardContent>
 
-        <CardFooter className="flex flex-col gap-0 border-t border-border !p-0">
+        <CardFooter className="flex flex-col gap-0 border-t border-border p-0!">
           <div className="flex w-full min-w-0 flex-col gap-2 px-4 pt-4 pb-4">
             <label className="sr-only" htmlFor="chat-input">
               {t('messageLabel')}
